@@ -1,25 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import UserItem from './components/UserItem';
+import './App.css'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      background: '#F0FFF3'
+    };
+  }
+
+  render() {
+    return(
+      <div className="App" style = {{background: this.state.background}}>
+        <h1>List Users</h1>
+        <UserItem name="Dan Angelin" email="dan.angelin@hotmail.com" />
+        <UserItem name="Bill Walker" email="bill.walker@example.com" />
+        <UserItem name="Bessie Castillo" email="bessie.castillo@example.com" />
+
+        <input type='color' onChange={(event) => this.handleBackgroundColor(event)}/>
+      </div>
+    );
+  }
+
+  handleBackgroundColor(event) {
+    console.log(event.target.value);
+    this.setState({background: event.target.value});
+  }
 }
 
 export default App;
