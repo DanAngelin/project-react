@@ -1,9 +1,22 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
 .App {
     min-height: 100vh;
     text-align: center;
 }
 
-h1 {
-    margin: 0;
+.image-users img{
+    border-radius: 50%;
+}
+
+.addusers {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
 }
