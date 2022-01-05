@@ -1,7 +1,7 @@
 import React from 'react';
-// import UserItem from './components/UserItem';
 import './App.css';
 import AddUsersForm from './components/AddUsersForm';
+import PostList from './components/PostList';
 import UserList from './components/UserList'
 
 class App extends React.Component {
@@ -11,7 +11,10 @@ class App extends React.Component {
       background: '#F0FFF3',
       color: '#363940',
       users: [
-      ]
+      ],
+      posts: [],
+      postsHideDisplay: false,
+      usersHideDisplay: true
     };
   }
 
@@ -21,27 +24,62 @@ class App extends React.Component {
 
         <AddUsersForm />
 
-        <h1>List Users</h1>
-        <UserList users={this.state.users} />
-
         <p>Change Background Color</p>
         <input type='color' onChange={(event) => this.handleBackgroundColor(event)}/>
         
         <p>Change Text Color</p>
         <input type='color' onChange={(event) => this.handleTextColor(event)} />
+
+        {/* BTN HIDE - DISPLAY */}
+
+        <div className='btn-display'>
+        <input type="button" value={this.state.usersHideDisplay ? 'Hide Users' : 'Display Users'} onClick={() => this.handleUsers()} />
+          <input type="button" value={this.state.postsHideDisplay ? 'Hide Posts' : 'Display Posts'} onClick={() => this.handlePosts()} />
+        </div>
+
+        {
+          this.state.usersHideDisplay ?
+          <div>
+            <h1>List Users</h1>
+            <UserList users={this.state.users} />
+          </div> :
+          null
+        }
+        
+        {
+          this.state.postsHideDisplay ?
+          <div>
+            <h1>List Posts</h1>
+            <PostList posts={this.state.posts} />
+          </div> :
+          null
+        }
       </div>
     );
   }
 
+
+  // FETCH API
+
   componentDidMount() {
     const url = 'https://jsonplaceholder.typicode.com/users';
+    const urlPosts = 'https://jsonplaceholder.typicode.com/posts';
 
     fetch(url)
       .then(response => response.json())
       .then(data => {
         this.setState({users: data})
       })
+
+      
+    fetch(urlPosts)
+    .then(response => response.json())
+    .then(data => {
+      this.setState({posts: data})
+    })
   }
+
+  // CHANGE COLOR - BACKGROUND TEXT
 
   handleBackgroundColor(event) {
     console.log(event.target.value);
@@ -52,6 +90,23 @@ class App extends React.Component {
     console.log(event.target.value);
     this.setState({color: event.target.value});
   }
+
+  // HIDE - DISPLAY USERS POSTS
+
+  handlePosts() {
+    this.setState({
+      postsHideDisplay: !this.state.postsHideDisplay,
+      usersHideDisplay: !this.state.usersHideDisplay
+    })
+   }
+
+   handleUsers() {
+    this.setState({
+      usersHideDisplay: !this.state.usersHideDisplay,
+      postsHideDisplay: !this.state.postsHideDisplay
+    })
+   }
+
 }
 
 export default App;
