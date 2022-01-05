@@ -1,7 +1,7 @@
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
 }
 
 .App {
@@ -11,6 +11,7 @@
 
 .image-users img{
     border-radius: 50%;
+    width: 5rem;
 }
 
 .addusers {
@@ -19,4 +20,13 @@
     justify-content: center;
     align-items: center;
     padding: 2rem;
+}
+
+.Users {
+    display: grid;
+    gap: 3rem;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    justify-content: space-around;
+    text-align: center;
+    align-items: center;
 }
