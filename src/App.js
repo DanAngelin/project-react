@@ -10,8 +10,7 @@ class App extends React.Component {
     this.state = {
       background: '#F0FFF3',
       color: '#363940',
-      users: [
-      ],
+      users: [],
       posts: [],
       postsHideDisplay: false,
       usersHideDisplay: true
@@ -22,7 +21,8 @@ class App extends React.Component {
     return(
       <div className="App" style = {{background: this.state.background, color: this.state.color}}>
 
-        <AddUsersForm />
+        <AddUsersForm submitAddForm={(event, name, email, isGoldClient) =>
+        this.submitAddForm(event, name, email, isGoldClient)} />
 
         <p>Change Background Color</p>
         <input type='color' onChange={(event) => this.handleBackgroundColor(event)}/>
@@ -30,11 +30,20 @@ class App extends React.Component {
         <p>Change Text Color</p>
         <input type='color' onChange={(event) => this.handleTextColor(event)} />
 
-        {/* BTN HIDE - DISPLAY */}
+         {/* BTN HIDE - DISPLAY  */}
 
         <div className='btn-display'>
-        <input type="button" value={this.state.usersHideDisplay ? 'Hide Users' : 'Display Users'} onClick={() => this.handleUsers()} />
-          <input type="button" value={this.state.postsHideDisplay ? 'Hide Posts' : 'Display Posts'} onClick={() => this.handlePosts()} />
+        <input 
+          type="button" 
+          value="Hide Users"
+          onClick={() => this.handleUsers()} 
+        />
+
+        <input 
+          type="button" 
+          value="Hide Posts"
+          onClick={() => this.handlePosts()} 
+        />
         </div>
 
         {
@@ -58,6 +67,34 @@ class App extends React.Component {
     );
   }
 
+  getMaxId(users) {
+    let maxId = 0;
+
+    users.forEach(user => {
+      if (user.id > maxId) {
+        maxId = user.id;
+      }
+    })
+    return maxId;
+  }
+
+  submitAddForm(event, name, email, isGoldClient) {
+    event.preventDefault();
+
+    this.setState(prevState => {
+      return {
+          users: [
+            ...prevState.users,
+            {
+              id: this.getMaxId(prevState.users) + 1,
+              name,
+              email,
+              isGoldClient
+            }
+          ]
+      }
+    });
+  }
 
   // FETCH API
 
@@ -68,6 +105,11 @@ class App extends React.Component {
     fetch(url)
       .then(response => response.json())
       .then(data => {
+        data = data.filter(user => user.id < 4);
+
+        data.forEach(user => {
+          user.isGoldClient = false
+        })
         this.setState({users: data})
       })
 
@@ -82,12 +124,10 @@ class App extends React.Component {
   // CHANGE COLOR - BACKGROUND TEXT
 
   handleBackgroundColor(event) {
-    console.log(event.target.value);
     this.setState({background: event.target.value});
   }
 
   handleTextColor(event) {
-    console.log(event.target.value);
     this.setState({color: event.target.value});
   }
 

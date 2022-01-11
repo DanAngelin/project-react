@@ -1,6 +1,7 @@
 import React from "react";
+import '../App.css';
 import PostItem from './PostItem'
-import postImg from '../img/post.png'
+import postImg from '../img/post.svg'
 
 class PostList extends React.Component {
 
@@ -8,7 +9,7 @@ class PostList extends React.Component {
         const { posts } = this.props;
 
         return (
-            <div>
+            <div className="posts-list">
                 {posts.map((post, index) => {
                     return <PostItem 
                                 image={<img src={ postImg } alt="icon post"/>}

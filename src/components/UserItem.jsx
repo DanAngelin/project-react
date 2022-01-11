@@ -3,7 +3,7 @@ import '../App.css';
 
 const UserItem = function(props) {
 
-    const { name, email, salary, image, isGoldClient } = props;
+    const { image, name, email, isGoldClient } = props;
 
     return(
         <div>
@@ -12,8 +12,7 @@ const UserItem = function(props) {
             </div>
             <h2> { name } </h2>
             <p> { email } </p>
-            <p> { salary } </p>
-            { isGoldClient.includes('.io') || isGoldClient.includes('.biz') ? <h3>Client Gold</h3> : <h3>Client Silver</h3>}
+            { isGoldClient && <h3>Client GOLD</h3> }
         </div>
     );
 }

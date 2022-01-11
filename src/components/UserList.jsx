@@ -8,13 +8,13 @@ class UserList extends React.Component {
         const { users } = this.props;
 
         return(
-            <div className="Users">
+            <div className="users-list">
                 {users.map((user, index) => {
                     return <UserItem
                         name={user.name}
                         email={user.email}
                         image={<img src={ image } alt="logo user"/>}
-                        isGoldClient={user.website}
+                        isGoldClient={ user.isGoldClient }
                         key={index}
                     />
                 })
