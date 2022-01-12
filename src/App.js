@@ -2,7 +2,8 @@ import React from 'react';
 import './App.css';
 import AddUsersForm from './components/AddUsersForm';
 import PostList from './components/PostList';
-import UserList from './components/UserList'
+import UserList from './components/UserList';
+import Swal from 'sweetalert2';
 
 class App extends React.Component {
   constructor() {
@@ -25,47 +26,53 @@ class App extends React.Component {
         this.submitAddForm(event, name, email, isGoldClient)} />
 
         <p>Change Background Color</p>
-        <input type='color' onChange={(event) => this.handleBackgroundColor(event)}/>
+        <input type='color' className='input-background' onChange={(event) => this.handleBackgroundColor(event)}/>
         
         <p>Change Text Color</p>
-        <input type='color' onChange={(event) => this.handleTextColor(event)} />
+        <input type='color' className='input-text' onChange={(event) => this.handleTextColor(event)} />
 
          {/* BTN HIDE - DISPLAY  */}
 
         <div className='btn-display'>
         <input 
           type="button" 
-          value="Hide Users"
+          value="Display Users"
           onClick={() => this.handleUsers()} 
         />
 
         <input 
           type="button" 
-          value="Hide Posts"
+          value="Display Posts"
           onClick={() => this.handlePosts()} 
         />
         </div>
 
         {
-          this.state.usersHideDisplay ?
+          this.state.usersHideDisplay &&
           <div>
             <h1>List Users</h1>
-            <UserList users={this.state.users} />
-          </div> :
-          null
+            <UserList users={this.state.users} handleDelete={this.handleDelete}/>
+          </div>
         }
         
         {
-          this.state.postsHideDisplay ?
+          this.state.postsHideDisplay &&
           <div>
             <h1>List Posts</h1>
-            <PostList posts={this.state.posts} />
-          </div> :
-          null
+            <PostList posts={this.state.posts}/>
+          </div>
         }
       </div>
     );
   }
+  // Button Delete Users
+
+  handleDelete = (id) => {
+    const newStateUsers = this.state.users.filter(user => user.id !== id)
+    this.setState({ users: newStateUsers });
+  }
+
+  // Add Form Users
 
   getMaxId(users) {
     let maxId = 0;
@@ -80,20 +87,35 @@ class App extends React.Component {
 
   submitAddForm(event, name, email, isGoldClient) {
     event.preventDefault();
-
-    this.setState(prevState => {
-      return {
-          users: [
-            ...prevState.users,
-            {
-              id: this.getMaxId(prevState.users) + 1,
-              name,
-              email,
-              isGoldClient
-            }
-          ]
-      }
-    });
+    if (name === "") {
+      Swal.fire({
+        title: 'Oops...',
+        text: 'The name field cannot be blank',
+        icon: 'warning',
+        confirmButtonText: 'Okay'
+      })
+    } else if (!email.includes("@") || !email.includes(".") || email === "") {
+      Swal.fire({
+        title: 'Oops...',
+        text: 'Please insert a valid email address!',
+        icon: 'warning',
+        confirmButtonText: 'Okay'
+      })
+    } else {
+      this.setState(prevState => {
+        return {
+            users: [
+              ...prevState.users,
+              {
+                id: this.getMaxId(prevState.users) + 1,
+                name,
+                email,
+                isGoldClient
+              }
+            ]
+        }
+      });
+    }
   }
 
   // FETCH API

@@ -20,6 +20,31 @@
     justify-content: center;
     align-items: center;
     padding: 2rem;
+    gap: 0.3rem;
+    border: 1px solid #363940;
+    width: 50%;
+    text-align: center;
+    margin: 0 auto;
+    border-radius: 1rem;
+}
+
+.add-users label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.input-name, .input-email {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.2rem 1rem;
+    width: 10rem;
+    border-radius: 0.4rem;
+    text-align: center;
 }
 
 .users-list, .posts-list {
@@ -61,4 +86,36 @@
 
 .btn-display input:hover {
     color: #52575D;
+}
+
+.btn-delete {
+    background-color: #363940;
+    border: none;
+    color: #FFB423;
+    padding: 0.3rem 0.7rem;
+    border-radius: 1rem;
+    cursor: pointer;
+}
+
+.btn-delete:hover {
+    color: #FDDB3A;
+}
+
+.btn-submit {
+    cursor: pointer;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    background-color: #52575D;
+    color: #FFB423;
+}
+
+.error-msg {
+    z-index: 1;
+    position: absolute;
+}
+
+.input-background, .input-text {
+    width: 5rem;
+    height: 2rem;
 }
