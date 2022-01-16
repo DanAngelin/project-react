@@ -1,0 +1,14 @@
+.error404 {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+    background-color: #F0FFF3;
+    color: #363940;
+    min-height: 100vh;
+}
+
+.error404 img {
+    max-width: 100%;
+}
